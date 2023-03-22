@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "laser_phaser/laser_phaser_mats/texture"
+	"$bumpmap" "laser_phaser/laser_phaser_mats/normal"
+}

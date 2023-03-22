@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$basetexture" "laser_phaser/icon_mats/neutral"
+	"$alphatest" 1
+	"$translucent" 1
+}
