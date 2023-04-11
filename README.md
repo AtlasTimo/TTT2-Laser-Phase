@@ -12,10 +12,13 @@ See your enemies through walls and shoot a giant laser at them!
 
 | Identifier | Description | Type |
 | ---------- | ----------- | ---- |
-ttt_laser_phaser_annonnymous | Disable the differenciation between friendly, enemy and neutral while seeing auras through walls. | bool |
-ttt_laser_phaser_range | The laser range | int |
-label_laser_phaser_sighting_range | The maximum x-ray range | int |
-ttt_laser_phaser_overload_damage | The damage dealt by the overheat explosion (Set to 0 to disable). | int |
+| ttt_laser_phaser_enable_xray | Enable X-Ray. | bool |
+| ttt_laser_phaser_annonnymous | Disable the differenciation between friendly, enemy and neutral while seeing auras through walls. | bool |
+| ttt_laser_phaser_enable_beep | Enable 'beep' sound | bool |
+| ttt_laser_phaser_range | The laser range | int |
+| ttt_laser_phaser_sighting_range | The maximum x-ray range | int |
+| ttt_laser_phaser_beep_range | Distance to enemy needed to beep | int |
+| ttt_laser_phaser_overload_damage | The damage dealt by the overheat explosion (Set to 0 to disable). | int |
 
 ## Features
 - 🌞 Easy to adjust via F1
