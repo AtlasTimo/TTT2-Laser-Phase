@@ -4,13 +4,17 @@ AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 local shootsound = Sound("laser_sound.ogg")
+local beepsound = Sound("beep_sound.ogg")
 
 function SWEP:Initialize()
 	self.laser = nil
+	self.nextbeep = CurTime()
+	self.makebeep = true
 end
 
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 10.0)
+	self.makebeep = false
 
 	local ow = self:GetOwner()
 
@@ -81,40 +85,69 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:Think()
-	if (self.laser == nil) then return end
-
 	local ow = self:GetOwner()
 
-	for i, v in pairs(player.GetAll()) do
+	if (LASER_PHASER.CVARS.laser_phaser_enable_beep and self.makebeep and CurTime() > self.nextbeep and self:ShouldBeep(ow)) then
+		ow:EmitSound(beepsound, 100, 100, 1)
+	end
 
+	if (self.laser ~= nil) then
+		for i, v in pairs(player.GetAll()) do
+	
+			if (v:GetName() == ow:GetName()) then continue end
+			if (not v:Alive() and v:GetObserverMode() ~= OBS_MODE_NONE) then continue end
+	
+			local erg = self.richtungsVektor.x * (self.stuetzVektor.x - v:GetPos().x)
+							+ self.richtungsVektor.y * (self.stuetzVektor.y - v:GetPos().y)
+							+ self.richtungsVektor.z * (self.stuetzVektor.z - v:GetPos().z)
+	
+			local r = self.richtungsVektor.x * self.richtungsVektor.x + self.richtungsVektor.y * self.richtungsVektor.y + self.richtungsVektor.z * self.richtungsVektor.z
+	
+			erg = erg * -1
+	
+			local lambda = erg / r
+	
+			if (lambda > 1 or lambda < 0) then continue end
+	
+			local vektorLot = Vector(self.stuetzVektor + lambda * self.richtungsVektor)
+	
+			local vektorSpielerLot = v:GetPos() - vektorLot
+	
+			if (vektorSpielerLot:Length() < 100) then
+				v:TakeDamage(300, self:GetOwner(), self)
+			end
+		end
+
+		self.laser = nil
+	end
+end
+
+function SWEP:ShouldBeep(ow)
+	local minimumangle = 180
+	local aimvector = ow:GetAimVector()
+	for i, v in pairs(player.GetAll()) do
 		if (v:GetName() == ow:GetName()) then continue end
 		if (not v:Alive() and v:GetObserverMode() ~= OBS_MODE_NONE) then continue end
 
-		local erg = self.richtungsVektor.x * (self.stuetzVektor.x - v:GetPos().x)
-						+ self.richtungsVektor.y * (self.stuetzVektor.y - v:GetPos().y)
-						+ self.richtungsVektor.z * (self.stuetzVektor.z - v:GetPos().z)
+		local owtotargetvector = v:EyePos() - ow:EyePos()
+		local owtotargetdistance = owtotargetvector:Length()
 
-		local r = self.richtungsVektor.x * self.richtungsVektor.x + self.richtungsVektor.y * self.richtungsVektor.y + self.richtungsVektor.z * self.richtungsVektor.z
+		if (owtotargetdistance > LASER_PHASER.CVARS.laser_phaser_beep_range) then continue end
 
-		erg = erg * -1
-
-		local lambda = erg / r
-
-		if (lambda > 1 or lambda < 0) then continue end
-
-		local vektorLot = Vector(self.stuetzVektor + lambda * self.richtungsVektor)
-
-		local vektorSpielerLot = v:GetPos() - vektorLot
-
-		if (vektorSpielerLot:Length() < 100) then
-			v:TakeDamage(300, self:GetOwner(), self)
+		local currentangle = 	(aimvector.x * owtotargetvector.x + aimvector.y * owtotargetvector.y + aimvector.z * owtotargetvector.z) / 
+								(aimvector:Length() * owtotargetdistance)
+		currentangle = math.deg(math.acos(currentangle))
+								
+		if (currentangle < minimumangle) then 
+			minimumangle = currentangle 
 		end
 	end
-
-	self.laser = nil
-
-	self:NextThink(CurTime() + 1 / 5)
-	return true
+	if (minimumangle < 30) then
+		self.nextbeep = CurTime() + 0.01 * minimumangle + 0.01
+		return true
+	else
+		return false
+	end
 end
 
 function SWEP:OnDrop()
