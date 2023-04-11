@@ -19,8 +19,8 @@ function SWEP:PrimaryAttack()
 	ow:EmitSound(shootsound, 100, 100, 1)
 
 	timer.Simple(1.25, function()
-
-		if (not ow:IsValid()) then return end
+		if (not IsValid(self)) then return end
+		if (not IsValid(ow)) then return end
 
 		local pViewModel = ow:GetViewModel()
 		if (not pViewModel:IsValid()) then return end
@@ -65,13 +65,15 @@ function SWEP:PrimaryAttack()
 
 	timer.Simple(3.75, function()
 		if (not IsValid(self)) then return end
+		if (not IsValid(ow)) then return end
 
 		if (LASER_PHASER.CVARS.laser_phaser_overload_damage > 0) then
 			local explode = ents.Create("env_explosion")
 			explode:SetPos(ow:GetPos())
 			explode:Spawn()
-			explode:SetKeyValue("iMagnitude", tostring(LASER_PHASER.CVARS.laser_phaser_overload_damage))
+			explode:SetKeyValue("iMagnitude", 0)
 			explode:Fire("Explode", 0, 0)
+			ow:TakeDamage(LASER_PHASER.CVARS.laser_phaser_overload_damage)
 		end
 
 		ow:StripWeapon("weapon_laser_phaser")
