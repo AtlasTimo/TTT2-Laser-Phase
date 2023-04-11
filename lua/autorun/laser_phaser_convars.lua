@@ -13,20 +13,24 @@ LASER_PHASER.CVARS.laser_phaser_overload_damage = laser_phaser_overload_damage:G
 
 if SERVER then
 
-    cvars.AddChangeCallback("ttt_laser_phaser_annonnymous", function(name, old, new)
-        LASER_PHASER.CVARS.laser_phaser_annonnymous = util.StringToType(new, "bool")
-    end, nil)
-
     cvars.AddChangeCallback("ttt_laser_phaser_range", function(name, old, new)
         LASER_PHASER.CVARS.laser_phaser_range = tonumber(new)
     end, nil)
 
-    cvars.AddChangeCallback("ttt_laser_phaser_sighting_range", function(name, old, new)
-        LASER_PHASER.CVARS.laser_phaser_sighting_range = tonumber(new)
-    end, nil)
-
     cvars.AddChangeCallback("ttt_laser_phaser_overload_damage", function(name, old, new)
         LASER_PHASER.CVARS.laser_phaser_overload_damage = tonumber(new)
+    end, nil)
+
+end
+
+if CLIENT then
+    
+    cvars.AddChangeCallback("ttt_laser_phaser_annonnymous", function(name, old, new)
+        LASER_PHASER.CVARS.laser_phaser_annonnymous = util.StringToType(new, "bool")
+    end, nil)
+
+    cvars.AddChangeCallback("ttt_laser_phaser_sighting_range", function(name, old, new)
+        LASER_PHASER.CVARS.laser_phaser_sighting_range = tonumber(new)
     end, nil)
 
 end
