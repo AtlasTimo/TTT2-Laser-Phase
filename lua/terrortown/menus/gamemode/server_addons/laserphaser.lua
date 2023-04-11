@@ -9,8 +9,18 @@ function CLGAMEMODESUBMENU:Populate(parent)
 	})
 
 	form:MakeCheckBox({
+		label = "label_laser_phaser_enable_xray",
+		serverConvar = "ttt_laser_phaser_enable_xray"
+	})
+
+	form:MakeCheckBox({
 		label = "label_laser_phaser_annonnymous",
 		serverConvar = "ttt_laser_phaser_annonnymous"
+	})
+
+	form:MakeCheckBox({
+		label = "label_laser_phaser_enable_beep",
+		serverConvar = "ttt_laser_phaser_enable_beep"
 	})
 
 	form:MakeSlider({
@@ -24,7 +34,15 @@ function CLGAMEMODESUBMENU:Populate(parent)
 	form:MakeSlider({
 		label = "label_laser_phaser_sighting_range",
 		serverConvar = "ttt_laser_phaser_sighting_range",
-		min = 50,
+		min = 20,
+		max = 10000,
+		decimal = 0
+	})
+
+	form:MakeSlider({
+		label = "label_laser_phaser_beep_range",
+		serverConvar = "ttt_laser_phaser_beep_range",
+		min = 20,
 		max = 10000,
 		decimal = 0
 	})

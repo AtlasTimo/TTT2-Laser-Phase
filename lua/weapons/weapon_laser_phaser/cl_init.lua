@@ -58,6 +58,8 @@ function SWEP:DrawHUD()
 	render.DrawLine(tAttachment.Pos, tAttachment.Pos + ow:GetAimVector() * 500, lineColor, true)
 	cam.End3D()
 
+	if (not LASER_PHASER.CVARS.laser_phaser_enable_xray) then return end
+
 	for i, v in pairs(player.GetAll()) do
 		if (v:Alive() and IsValid(v) and v ~= ow) then
 			if (ow:IsLineOfSightClear(v)) then continue end
