@@ -4,7 +4,8 @@
 See your enemies through walls and shoot a giant laser at them!
 
 ## How to Use
-- Equip to activate the x-ray scanner. It is limitad to a given distance however.
+- Equip to activate the enemy-detector, which helps you to find your enemies through walls.
+- Alternativly you may activate the x-ray functionality via ConVars.
 - Left click to charge and fire the weapon.
 
 ## ConVars
