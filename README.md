@@ -18,6 +18,7 @@ See your enemies through walls and shoot a giant laser at them!
 | ttt_laser_phaser_range | The laser range | int |
 | ttt_laser_phaser_sighting_range | The maximum x-ray range | int |
 | ttt_laser_phaser_beep_range | Distance to enemy needed to beep | int |
+| ttt_laser_phaser_beep_angle | Higher value means that it starts to 'beep' earlier | int |
 | ttt_laser_phaser_overload_damage | The damage dealt by the overheat explosion (Set to 0 to disable). | int |
 
 ## Features
