@@ -7,7 +7,8 @@ local laser_phaser_enable_beep = CreateConVar("ttt_laser_phaser_enable_beep", "1
 local laser_phaser_range = CreateConVar("ttt_laser_phaser_range", "5000", {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED})
 local laser_phaser_sighting_range = CreateConVar("ttt_laser_phaser_sighting_range", "1000", {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED})
 local laser_phaser_beep_range = CreateConVar("ttt_laser_phaser_beep_range", "1000", {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED})
-local laser_phaser_overload_damage = CreateConVar("ttt_laser_phaser_overload_damage", "50", {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED})
+local laser_phaser_beep_angle = CreateConVar("ttt_laser_phaser_beep_angle", "80", {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED})
+local laser_phaser_overload_damage = CreateConVar("ttt_laser_phaser_overload_damage", "20", {FCVAR_NOTIFY, FCVAR_ARCHIVE, FCVAR_REPLICATED})
 
 LASER_PHASER.CVARS.laser_phaser_enable_xray = laser_phaser_enable_xray:GetBool()
 LASER_PHASER.CVARS.laser_phaser_annonnymous = laser_phaser_annonnymous:GetBool()
@@ -15,6 +16,7 @@ LASER_PHASER.CVARS.laser_phaser_enable_beep = laser_phaser_enable_beep:GetBool()
 LASER_PHASER.CVARS.laser_phaser_range = laser_phaser_range:GetInt()
 LASER_PHASER.CVARS.laser_phaser_sighting_range = laser_phaser_sighting_range:GetInt()
 LASER_PHASER.CVARS.laser_phaser_beep_range = laser_phaser_sighting_range:GetInt()
+LASER_PHASER.CVARS.laser_phaser_beep_angle = laser_phaser_beep_angle:GetInt()
 LASER_PHASER.CVARS.laser_phaser_overload_damage = laser_phaser_overload_damage:GetInt()
 
 if SERVER then
@@ -31,8 +33,12 @@ if SERVER then
         LASER_PHASER.CVARS.laser_phaser_beep_range = tonumber(new)
     end, nil)
 
-    cvars.AddChangeCallback("ttt_laser_phaser_overload_damage", function(name, old, new)
-        LASER_PHASER.CVARS.laser_phaser_overload_damage = tonumber(new)
+    cvars.AddChangeCallback("ttt_laser_phaser_beep_range", function(name, old, new)
+        LASER_PHASER.CVARS.laser_phaser_beep_range = tonumber(new)
+    end, nil)
+
+    cvars.AddChangeCallback("ttt_laser_phaser_beep_angle", function(name, old, new)
+        LASER_PHASER.CVARS.laser_phaser_beep_angle = tonumber(new)
     end, nil)
 
 end

@@ -142,7 +142,7 @@ function SWEP:ShouldBeep(ow)
 			minimumangle = currentangle 
 		end
 	end
-	if (minimumangle < 30) then
+	if (minimumangle < LASER_PHASER.CVARS.laser_phaser_beep_angle) then
 		self.nextbeep = CurTime() + 0.01 * minimumangle + 0.01
 		return true
 	else
